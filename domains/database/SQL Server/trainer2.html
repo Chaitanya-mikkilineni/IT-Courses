@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Courses - Home</title>
+    <!-- Local Bootstrap CSS -->
+    <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Local AOS CSS -->
+    <link href="../../../assets/css/aos.css" rel="stylesheet">
+    <!-- Local Font Awesome CSS -->
+    <link href="../../../assets/css/fontawesome.min.css" rel="stylesheet">
+    <!-- Local/Inline Custom Styles -->
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #4f46e5;
+            --accent: #22d3ee;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --glass-bg: rgba(255,255,255,0.18);
+            --glass-border: rgba(255,255,255,0.45);
+            --glass-shadow: 0 8px 32px 0 rgba(31,38,135,0.25), 0 1.5px 8px 0 rgba(0,0,0,0.10);
+            --glass-shadow-hover: 0 16px 48px 0 rgba(31,38,135,0.35), 0 4px 24px 0 rgba(0,0,0,0.18);
+            --text-main: #fff;
+            --text-dark: #1e293b;
+            --button-glow: 0 0 16px 2px var(--primary);
+            --button-glow-hover: 0 0 24px 4px var(--accent);
+            --hero-bg: linear-gradient(135deg, #667eea 0%, #22d3ee 100%);
+            --footer-bg: rgba(255,255,255,0.08);
+        }
+        body[data-theme='dark'] {
+            --primary: #6366f1;
+            --secondary: #4f46e5;
+            --accent: #22d3ee;
+            --glass-bg: rgba(30,41,59,0.22);
+            --glass-border: rgba(99,102,241,0.35);
+            --glass-shadow: 0 8px 32px 0 rgba(31,38,135,0.45), 0 1.5px 8px 0 rgba(0,0,0,0.25);
+            --glass-shadow-hover: 0 16px 48px 0 rgba(31,38,135,0.55), 0 4px 24px 0 rgba(0,0,0,0.28);
+            --text-main: #fff;
+            --text-dark: #e0e7ef;
+            --hero-bg: linear-gradient(135deg, #232946 0%, #6366f1 100%);
+            --footer-bg: rgba(30,41,59,0.22);
+        }
+        body {
+            font-family: 'Poppins', Arial, Helvetica, sans-serif;
+            background: var(--hero-bg);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            color: var(--text-main);
+            transition: background 0.4s;
+        }
+        /* Floating Spheres */
+        .sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(0.5px);
+            opacity: 0.7;
+            z-index: 0;
+            animation: float-sphere 12s ease-in-out infinite alternate;
+            transition: background 0.5s, box-shadow 0.5s;
+        }
+        .sphere1 {
+            width: 170px; height: 170px;
+            left: 24px; top: 32px;
+			background-size: 190% 190%;
+            background: radial-gradient(circle at 30% 30%, #ffb347, #ffcc33 60%, transparent 100%);
+            box-shadow: 0 0 60px 20px #ffb34788;
+            transition: background 0.5s, box-shadow 0.5s;
+            cursor: pointer;
+            z-index: 1000;
+            position: fixed;
+            pointer-events: auto;
+        }
+        .sphere1.sun {
+            box-shadow: 0 0 80px 30px #ffb347cc, 0 0 120px 40px #fffbe6aa;
+        }
+        .sphere1.moon {
+            background: url('../../../assets/moon_main1.png') center center no-repeat;
+            box-shadow: 0 0 80px 30px #e0e7efcc, 0 0 120px 40px #6366f1aa;
+            border-radius: 50%;
+            border: 2px solid #e0e7ef44;
+            overflow: hidden;
+            filter: brightness(0.95) grayscale(0.1) contrast(1.1);
+        }
+        .sphere1.moon:hover {
+            filter: brightness(1.25) grayscale(0) contrast(1.2) drop-shadow(0 0 32px #fffbe6cc);
+            box-shadow: 0 0 120px 40px #e0e7efff, 0 0 180px 60px #6366f1ff;
+        }
+        .sphere1:hover {
+            filter: brightness(1.2) blur(0.5px);
+            box-shadow: 0 0 120px 40px #ffb347ff, 0 0 180px 60px #fffbe6ff;
+        }
+        body[data-theme='dark'] .sphere1 {
+            background: url('../../../assets/moon_main1.png') center center/contain no-repeat;
+            box-shadow: 0 0 80px 30px #e0e7efcc, 0 0 120px 40px #6366f1aa;
+            border-radius: 50%;
+            border: 2.5px solid #e0e7ef44;
+            overflow: hidden;
+            filter: brightness(0.95) grayscale(0.1) contrast(1.1);
+        }
+        body[data-theme='dark'] .sphere1:hover {
+            filter: brightness(1.25) grayscale(0) contrast(1.2) drop-shadow(0 0 32px #fffbe6cc);
+            box-shadow: 0 0 120px 40px #e0e7efff, 0 0 180px 60px #6366f1ff;
+        }
+        .sphere2 { width: 120px; height: 120px; background: radial-gradient(circle at 70% 70%, #22d3ee, #6366f1 70%, transparent 100%); top: 10%; right: 10%; animation-delay: 2s; }
+        .sphere3 { width: 220px; height: 220px; background: radial-gradient(circle at 60% 40%, #ff5e62, #ff9966 70%, transparent 100%); bottom: 8%; left: 12%; animation-delay: 4s; }
+        .sphere4 { width: 100px; height: 100px; background: radial-gradient(circle at 50% 50%, #22c55e, #a7f3d0 80%, transparent 100%); bottom: 15%; right: 15%; animation-delay: 1s; }
+        @keyframes float-sphere {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-30px) scale(1.08); }
+        }
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            right: 32px;
+            z-index: 100;
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 50%;
+            width: 48px; height: 48px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--glass-shadow);
+            cursor: pointer;
+            transition: background 0.3s, border 0.3s;
+        }
+        .theme-toggle i {
+            font-size: 1.6rem;
+            color: var(--primary);
+            transition: color 0.3s;
+        }
+        .theme-toggle:hover {
+            background: var(--accent);
+            border-color: var(--primary);
+        }
+        .theme-toggle:hover i {
+            color: #fff;
+        }
+        /* Glass Panel */
+        .glass-panel {
+            background: var(--glass-bg);
+            border: 2.5px solid var(--glass-border);
+            border-radius: 32px;
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 2.5rem 2rem;
+            margin: 1.5rem 0;
+            position: relative;
+            z-index: 1;
+            transition: box-shadow 0.35s, transform 0.35s;
+            perspective: 800px;
+            overflow: visible;
+        }
+        .glass-panel:hover {
+            box-shadow: var(--glass-shadow-hover), 0 0 0 6px rgba(255,255,255,0.08);
+            transform: translateY(-10px) scale(1.045) rotateY(6deg) rotateX(2deg);
+        }
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 36px;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            background: linear-gradient(90deg, #ff5e62, #ffb347, #22d3ee, #22c55e, #6366f1, #ff5e62);
+            background-size: 400% 400%;
+            filter: blur(6px);
+            animation: glassy-glow 6s linear infinite;
+        }
+        .glass-panel:hover::before {
+            opacity: 1;
+        }
+        .glass-panel > * {
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes glassy-glow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* Domain Cards */
+        .domain-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            justify-content: center;
+            margin-top: 2.5rem;
+            z-index: 2;
+            position: relative;
+        }
+        .domain-card {
+            width: 320px;
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            background: var(--glass-bg);
+            border: 2.5px solid var(--glass-border);
+            border-radius: 32px;
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            transition: box-shadow 0.35s, transform 0.35s;
+            position: relative;
+            z-index: 1;
+            perspective: 800px;
+            overflow: visible;
+        }
+        .domain-card:hover {
+            box-shadow: var(--glass-shadow-hover), 0 0 0 8px rgba(255,255,255,0.10);
+            transform: translateY(-12px) scale(1.06) rotateY(-7deg) rotateX(3deg);
+        }
+        .domain-card::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 36px;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            background: linear-gradient(90deg, #ff5e62, #ffb347, #22d3ee, #22c55e, #6366f1, #ff5e62);
+            background-size: 400% 400%;
+            filter: blur(8px);
+            animation: glassy-glow 6s linear infinite;
+        }
+        .domain-card:hover::before {
+            opacity: 1;
+        }
+        .domain-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1.2rem;
+            color: var(--accent);
+            filter: drop-shadow(0 2px 8px rgba(34,211,238,0.18));
+            transition: color 0.3s;
+            z-index: 3;
+        }
+        .domain-card:hover .domain-icon {
+            color: var(--primary);
+        }
+        .domain-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.7rem;
+            z-index: 3;
+        }
+        .domain-desc {
+            color: #e0e7ef;
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            z-index: 3;
+        }
+        .domain-btn {
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: #fff;
+            box-shadow: var(--button-glow);
+            transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+            outline: none;
+            position: relative;
+            z-index: 3;
+            overflow: hidden;
+        }
+        .domain-btn:hover {
+            background: linear-gradient(90deg, #ff5e62, #22d3ee, #22c55e, #6366f1);
+            box-shadow: 0 0 32px 8px #ffb347, 0 0 24px 4px #22d3ee;
+            transform: scale(1.12) rotateY(6deg);
+        }
+        /* Footer */
+        .footer {
+            background: var(--footer-bg);
+            border-top: 1.5px solid var(--glass-border);
+            color: #fff;
+            padding: 2.5rem 0 1.2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+            font-size: 1.1rem;
+            letter-spacing: 0.02em;
+            z-index: 2;
+            position: relative;
+        }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .domain-cards { gap: 1.5rem; }
+            .domain-card { width: 90vw; max-width: 350px; }
+        }
+        @media (max-width: 600px) {
+            .hero-title { font-size: 2rem; }
+            .domain-card { padding: 1.2rem 0.7rem; }
+        }
+        .glass-btn, .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 0.8rem 2.2rem;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: #fff;
+            box-shadow: var(--button-glow);
+            transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+            outline: none;
+            position: relative;
+            z-index: 3;
+            overflow: hidden;
+            text-decoration: none;
+        }
+        .glass-btn:hover, .hero-btn:hover {
+            background: linear-gradient(90deg, #ff5e62, #22d3ee, #22c55e, #6366f1);
+            box-shadow: 0 0 32px 8px #ffb347, 0 0 24px 4px #22d3ee;
+            transform: scale(1.12) rotateY(6deg);
+            color: #fff;
+            text-decoration: none;
+        }
+        .site-title-fixed {
+            position: fixed;
+            top: 12px;
+            left: 24px;
+            z-index: 2000;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+            text-shadow: 0 2px 16px #23294655, 0 1px 0 #6366f1;
+            letter-spacing: 0.01em;
+            user-select: none;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .site-title-fixed:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <a href="../../../index.html" class="site-title-fixed">IT Courses</a>
+
+    <div class="sphere sphere1 sun" id="sun-moon"></div>
+    <div class="sphere sphere2"></div>
+    <div class="sphere sphere3"></div>
+    <div class="sphere sphere4"></div>
+
+    <div class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">
+        <i class="fa-solid fa-moon"></i>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background: transparent; z-index: 10;">
+        <div class="container-fluid">
+            </div>
+    </nav>
+
+    <!-- -- -->
+
+    <section id="power-bi-section" class="hero d-flex align-items-center justify-content-center" style="min-height: 340px; height: 10vh;">
+        <div class="glass-panel text-center d-flex flex-column align-items-center justify-content-center" data-aos="fade-down" style="min-width: 340px; min-height: 100px;">
+            <div class="hero-title" style="font-size:2.2rem; font-weight:700; margin-bottom:1rem;">SQL Server</div>
+            <a href="../SQL Server.html" class="hero-btn glass-btn"><i class="fa fa-arrow-left ms-2">&nbsp;&nbsp;</i><span>Back to SQL Server</span></a>
+        </div>
+    </section>
+    <section id="courses" class="container domain-cards">
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">1</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuWQgAAAAAAdNXtY7QSPGBzAR5mWqtSqk" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">2</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuZwgAAAAAAY9Nu5O9t4pJmYHMD31aS78" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">3</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBucggAAAAAAR-6VDnUpkHahC4LXy4AGF0" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">4</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBufAgAAAAAAe4uOIDjIVTwoGiRSh3Znxo" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">5</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuiQgAAAAAARtgjF8p97DZT70VLS8cRDc" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">6</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBulAgAAAAAAZNlRXMQMSQfmEiDxguWZec" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">7</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBumAgAAAAAAUgwBdNtz_VyezvnBCQBTI4" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">8</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBulwgAAAAAATbyPBMuHu_5HRdylXuByzg" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">9</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBumQgAAAAAAUgS1WEbT07G4QHQ82pEwrU" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">10</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuWggAAAAAAZjSepKtQukGRtybZJh-nu4" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">11</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuWwgAAAAAAWV7d75iNdSqr2F7zoZfELk" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">12</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuXAgAAAAAAaN2IQX4qJaRSG4YVgCZirM" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">13</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuXQgAAAAAAeMIZ8yKaknjK64nao6EofQ" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">14</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuXwgAAAAAATWNLE2s_SqCH-xzQJRlFls" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">15</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuYQgAAAAAASlNcwrkWfSZh9vgQF7lR3M" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">16</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuYggAAAAAAaIT7YQCKoQgx74TRZGhV2o" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">17</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuYwgAAAAAAdOjt09buZ3GYPWmyYHDJbM" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">18</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuZggAAAAAAXVgTjwWO_XT1L5ztnsULg4" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">19</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuZAgAAAAAAZqjMiYkBA67xD5oyHP11kQ" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">20</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuaQgAAAAAAQtHc8Ilvl1JhBwl2zAUz8o" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">21</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuaAgAAAAAASdxIp2uuatjKlEpy9YK9hs" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">22</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuaggAAAAAAT8o-hFDigCClghNxCYTzms" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">23</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuawgAAAAAAYGTLbLMhQQ42DHWF41573I" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">24</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBubQgAAAAAAVtwe-ikhPvXAPofGu1vfY8" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">25</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBubAgAAAAAAXl0jaZB0OGKVrIss8Z-sZ8" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">26</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBubwgAAAAAAa5cOiZPqGU2gOF87GeLwSg" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">27</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBubggAAAAAAQu0stkZ9iOCzjnw-ux7SAE" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">28</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBucQgAAAAAAWTfLDf4NFNGJt2KKHLl74M" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">29</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBucAgAAAAAAUAxXBjfqoGkHZZTWn07Bv0" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">30</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBucwgAAAAAAYBxYd6fPbVJgnlEgUgLR-w" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">31</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBudAgAAAAAAXe9aTQLb2BPr9ch0f2mTyg" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">32</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBudwgAAAAAAaCjQm4SJXg5a8xLSt6OIak" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">33</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBudQgAAAAAAUhxyV3TAUY_3xtW2FmCWRQ" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">34</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBudggAAAAAAe9u-dUKFhgbpAWPC1ggqJA" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">35</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBueAgAAAAAASCd3VfGLFa3gGf1obuVLFg" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">36</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuewgAAAAAAVxpmccv6I5lf1t2j6ktUjU" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">37</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBueQgAAAAAAQmDQD0jTsl_g9dNVaFQiHo" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">38</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBueggAAAAAAZ37mo7L6iYrjmVq1X-zJ1Q" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">39</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBufQgAAAAAAX88CAVzRfTKxBJto88WhMY" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">40</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBufwgAAAAAAbbb-GMM2y0u7r4tfgvq4yc" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">41</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBugAgAAAAAAWyBG3iW-CKdQZE9qiLTxkg" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">42</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBugggAAAAAAejrYd_WTNhHmkwBHpP7xPY" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">43</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBugQgAAAAAATWYvOOBfOMpf3uZMwjgHaU" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">44</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuhAgAAAAAASSiSLe4QXxvWW2wMSK21ew" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">45</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBugwgAAAAAAYAOIyitS5uCFAhjitk5ZH4" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">46</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuhggAAAAAASQqynupXVG13MAeRcuo8Po" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">47</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuhQgAAAAAAUsQVTAxrK9d1cQXY_IG3ZE" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">48</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuhwgAAAAAAcaTGBdor0_vMbSm7DqZ0lo" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">49</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuiAgAAAAAAVOCsU4b8pLw93p3nw2NoT8" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">50</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuiwgAAAAAAYfhzn7HU_8tyz2nCAFb19U" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">51</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBujAgAAAAAAYgbq8OXvamxxI9mMnx95d4" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">52</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBuiggAAAAAATvipP8dnD5ehXZxylTA92c" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">53</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBujQgAAAAAAfB2N1EmDFjvFVMDKWBHa58" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">54</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBujggAAAAAAal879lHdn4eKKxxxrijJ0E" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">55</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBujwgAAAAAATgfk4fWGNiq5hxlfTmM35g" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">56</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBukQgAAAAAAWNcstQflJEUOQProbHIS5g" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">57</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBukAgAAAAAASlODlvQ4AJq0KRH1fJE3ps" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">58</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBukwgAAAAAAV37g-HK_SbIP92_1Kb7qHw" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">59</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBukggAAAAAATGRFbzJ-M1Fwo__IzvBgVk" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">60</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBulggAAAAAAf_mC0oYkWCdoeZ62i_ONRQ" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="domain-card glass-panel" data-aos="zoom-in-up">
+            <div class="domain-title">61</div>
+            <div class="video-wrapper">
+                <iframe src="https://1drv.ms/v/c/6e31f39d0b4ab4f5/IQT1tEoLnfMxIIBulQgAAAAAAQnxBpO3IIdxd5zPKf3EoXw" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+</section>
+
+
+    <footer class="footer">
+        <div class="footer-brand">IT Courses</div>
+        <div class="footer-tagline">Empowering your future with world-class IT education.</div>
+        <div class="footer-copyright">&copy; 2024 IT Courses. All rights reserved.</div>
+    </footer>
+
+    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../assets/js/aos.js"></script>
+    <script>
+        AOS.init({ once: true, duration: 700, offset: 60 });
+        // Theme toggle logic
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const sunMoon = document.getElementById('sun-moon');
+        let dark = false;
+        themeToggle.onclick = function() {
+            dark = !dark;
+            if (dark) {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+                sunMoon.classList.remove('sun');
+                sunMoon.classList.add('moon');
+            } else {
+                body.setAttribute('data-theme', 'light');
+                themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+                sunMoon.classList.remove('moon');
+                sunMoon.classList.add('sun');
+            }
+        };
+    </script>
+</body>
+</html> 
